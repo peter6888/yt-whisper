@@ -2,6 +2,11 @@
 
 This repository uses `yt-dlp` and [OpenAI's Whisper](https://openai.com/blog/whisper) to generate subtitle files for any youtube video.
 
+## Quick Example in Google Colab
+
+For below steps, I've made a quick example in Google Colab 
+- [WhisperYouTubeToText.ipynb](https://colab.research.google.com/drive/1WtedoyBFowYxS4H2EngT_MZjccdjzB4N?usp=sharing)
+
 ## Installation
 
 To get started, you'll need Python 3.7 or newer. Install the binary by running the following command:
