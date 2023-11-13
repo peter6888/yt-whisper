@@ -4,7 +4,7 @@ from whisper.tokenizer import LANGUAGES, TO_LANGUAGE_CODE
 import argparse
 import warnings
 import yt_dlp
-from .utils import slugify, str2bool, write_srt, write_vtt
+from .utils import slugify, str2bool, write_srt, write_vtt, write_txt
 import tempfile
 
 
@@ -15,8 +15,8 @@ def main():
                         help="video URLs to transcribe")
     parser.add_argument("--model", default="small",
                         choices=whisper.available_models(), help="name of the Whisper model to use")
-    parser.add_argument("--format", default="vtt",
-                        choices=["vtt", "srt"], help="the subtitle format to output")
+    parser.add_argument("--format", default="txt",
+                        choices=["vtt", "srt", "txt"], help="the subtitle format to output")
     parser.add_argument("--output_dir", "-o", type=str,
                         default=".", help="directory to save the outputs")
     parser.add_argument("--verbose", type=str2bool, default=False,
@@ -55,12 +55,18 @@ def main():
                 write_vtt(result["segments"], file=vtt, line_length=break_lines)
 
             print("Saved VTT to", os.path.abspath(vtt_path))
-        else:
+        elif (subtitles_format == 'srt'):
             srt_path = os.path.join(output_dir, f"{slugify(title)}.srt")
             with open(srt_path, 'w', encoding="utf-8") as srt:
                 write_srt(result["segments"], file=srt, line_length=break_lines)
 
             print("Saved SRT to", os.path.abspath(srt_path))
+        else:
+            txt_path = os.path.join(output_dir, f"{slugify(title)}.txt")
+            with open(txt_path, 'w', encoding="utf-8") as txt:
+                write_txt(result["segments"], file=txt, line_length=break_lines)
+
+            print("Saved TXT to", os.path.abspath(txt_path))
 
 
 def get_audio(urls):
