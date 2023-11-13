@@ -76,6 +76,19 @@ def write_srt(transcript: Iterator[dict], file: TextIO, line_length: int = 0):
             flush=True,
         )
 
+def write_txt(transcript: Iterator[dict], file: TextIO, line_length: int = 0):
+    for i, segment in enumerate(transcript, start=1):
+        segment = process_segment(segment, line_length=line_length)
+
+        print(
+            # f"{i}\n"
+            # f"{format_timestamp(segment['start'], always_include_hours=True, decimal_marker=',')} --> "
+            # f"{format_timestamp(segment['end'], always_include_hours=True, decimal_marker=',')}\n"
+            f"{segment['text'].strip().replace('-->', '')}\n",
+            file=file,
+            flush=True,
+        )
+
 def slugify(title):
     return "".join(c if c.isalnum() else "_" for c in title).rstrip("_")
 
