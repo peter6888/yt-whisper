@@ -89,6 +89,11 @@ def write_txt(transcript: Iterator[dict], file: TextIO, line_length: int = 0):
             flush=True,
         )
 
+        print(
+            f"{segment['text'].strip().replace('-->', '')}\n",
+            flush=True,
+        )
+
 def slugify(title):
     return "".join(c if c.isalnum() else "_" for c in title).rstrip("_")
 
